@@ -15,16 +15,25 @@
                 </div>
             </div>
             <div class="card-body">
-                <h5 class="card-title">{{ props.title }}</h5>
+                <div class="row justify-content-center align-items-center">
+
+                    <Animations :ICON="props.icon" />
+
+                    <div class="col">
+                        <h5>{{ props.title }}</h5>
+                    </div>
+                </div>
                 <p class="card-text mt-5">
                     <!--Aquí se importa así-->
-                    <component :is="props.component" />
+                    <component :is="props?.component" v-if="props?.component" />
                 </p>
             </div>
         </div>
     </div>
 </template>
 <script setup lang="ts">
+import Animations from './Animations.vue';
+
 const props = defineProps<{
     header: string;
     title: string;
@@ -37,7 +46,7 @@ const props = defineProps<{
         class: string;
         type: string;
     }> | null;
-
-    component: Object; //Componente aquí
+    icon: object;
+    component: Object | null; //Componente aquí
 }>();
 </script>

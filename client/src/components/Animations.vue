@@ -9,11 +9,19 @@ let anim = ref()
 
 onMounted(() => {
     setTimeout(() => {
-        console.log(anim.value.goToAndPlay(150, true))
         anim.value
     }, 500)
 })
 </script>
 <template>
-    <LottieAnimation :animation-data="props.ICON" :auto-play="true" :loop="true" :speed="1" ref="anim" />
+    <div :style="{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    }" class="col col-lg-4">
+        <LottieAnimation :animation-data="props.ICON" :style="{
+        width: '100px',
+        height: '100px'
+    }" :auto-play="true" :loop="true" :speed="1" ref="anim" />
+    </div>
 </template>
