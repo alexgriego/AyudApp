@@ -24,6 +24,7 @@ const SesionStore = defineStore('sesion', () => {
     const logout = () => {
         PAT.value = null
         RAT.value = null
+        successMessage('Hasta luego', 'Sesión cerrada correctamente')
         url.push('/login')
     }
     const alterLoading = () => {
