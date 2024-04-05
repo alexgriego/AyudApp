@@ -1,33 +1,32 @@
 <template>
-    <div class="col col-lg-6">
-        <div class="card card-default">
-            <div class="card-header">
-                <h5>{{ props.header }}</h5>
-                <div class="card-tools" v-for="item in props?.buttons" v-if="props?.buttons">
-                    <RouterLink :to="item.link" :class="item.class" v-if="item.type !== 'button'">
-                        <i :class="item.icon"> </i>
-                        {{ item.text }}
-                    </RouterLink>
-                    <button :class="item.class" v-else>
-                        <i :class="item.icon"></i>
-                        {{ item.text }}
-                    </button>
+
+    <div class="card card-default">
+        <div class="card-header">
+            <h5>{{ props.header }}</h5>
+            <div class="card-tools" v-for="item in props?.buttons" v-if="props?.buttons">
+                <RouterLink :to="item.link" :class="item.class" v-if="item.type !== 'button'">
+                    <i :class="item.icon"> </i>
+                    {{ item.text }}
+                </RouterLink>
+                <button :class="item.class" v-else>
+                    <i :class="item.icon"></i>
+                    {{ item.text }}
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row justify-content-center align-items-center">
+
+                <Animations :ICON="props.icon" />
+
+                <div class="col">
+                    <h5>{{ props.title }}</h5>
                 </div>
             </div>
-            <div class="card-body">
-                <div class="row justify-content-center align-items-center">
-
-                    <Animations :ICON="props.icon" />
-
-                    <div class="col">
-                        <h5>{{ props.title }}</h5>
-                    </div>
-                </div>
-                <p class="card-text mt-5">
-                    <!--Aquí se importa así-->
-                    <component :is="props?.component" v-if="props?.component" />
-                </p>
-            </div>
+            <p class="card-text mt-5">
+                <!--Aquí se importa así-->
+                <component :is="props?.component" v-if="props?.component" />
+            </p>
         </div>
     </div>
 </template>

@@ -1,7 +1,9 @@
 <template>
-    <CardLayout :component="LoginComponent" :buttons="null" :header="'Iniciar Sesión'"
-        :title="'Ingrese sus credenciales'" :icon="Fingerprint" />
+    <div class="col col-lg-6">
+        <CardLayout :component="LoginComponent" :buttons="null" :header="'Iniciar Sesión'"
+            :title="'Ingrese sus credenciales'" :icon="Fingerprint" />
 
+    </div>
 </template>
 
 <script setup lang="ts">

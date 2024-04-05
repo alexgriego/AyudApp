@@ -1,7 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { getCredentials, getNewPAT } from '@/apis/sesion.apis'
-import type { CredentialsTypes } from '@/types/SesionTypes'
+import { getCredentials, getNewPAT, changePassword, changePasswordConfirm } from '@/apis/sesion.apis'
+import type { ChangePasswordConfirmTypes, CredentialsTypes } from '@/types/SesionTypes'
 import { useRouter } from 'vue-router'
 import { errorMessage, successMessage } from '@/components/messages'
 
@@ -38,6 +38,35 @@ const SesionStore = defineStore('sesion', () => {
         isLoading.value = !isLoading.value
     }
 
+    const cambiarContraseña = async (data: string) => {
+        alterLoading()
+        await changePassword(data)
+            .then(() => {
+                successMessage('Correo enviado', 'Se ha enviado un correo para restablecer tu contraseña')
+            })
+            .catch((error) => {
+                errorMessage(error.response.data)
+            })
+            .finally(() => {
+                alterLoading()
+            })
+    }
+
+    const guardarNuevaContraseña = async (data: ChangePasswordConfirmTypes) => {
+        alterLoading()
+        await changePasswordConfirm(data)
+            .then(() => {
+                successMessage('Contraseña cambiada', 'Se ha cambiado tu contraseña correctamente')
+                url.push('/login')
+            })
+            .catch((error) => {
+                errorMessage(error.response.data)
+            })
+            .finally(() => {
+                alterLoading()
+            })
+    }
+
     const solicitarNuevoPAT = async () => {
         if (isLogged.value && timer.value >= 18 && timer.value <= 1799) {
             await getNewPAT()
@@ -61,7 +90,9 @@ const SesionStore = defineStore('sesion', () => {
         solicitarNuevoPAT,
         login,
         logout,
-        alterLoading
+        alterLoading,
+        cambiarContraseña,
+        guardarNuevaContraseña
     }
 })
 
