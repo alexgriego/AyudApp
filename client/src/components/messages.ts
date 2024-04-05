@@ -37,7 +37,7 @@ export const errorMessage = (data: any) => {
     })
 }
 
-export const warningMessage = (title: string, message: string) => {
+export const warningMessage = (title: string, message: string, Callback: () => void) => {
     return Swal.fire({
         icon: 'warning',
         title: title,
@@ -47,6 +47,9 @@ export const warningMessage = (title: string, message: string) => {
         cancelButtonText: 'No',
         allowOutsideClick: false
     }).then((result) => {
-        return result.isConfirmed
+        if (result.isConfirmed) {
+            Callback()
+            
+        }
     })
 }
