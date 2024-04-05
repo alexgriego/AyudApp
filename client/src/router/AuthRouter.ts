@@ -26,7 +26,7 @@ const AuthRoutes = [
         component: RegisterView
     },
     {
-        path: 'activation/:uid/:token',
+        path: 'activate/:uid/:token',
         name: 'activation',
         component: ActivateView
     }

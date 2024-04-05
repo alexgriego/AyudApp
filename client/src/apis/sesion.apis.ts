@@ -1,4 +1,4 @@
-import type { CredentialsTypes, ChangePasswordConfirmTypes, RegisterTypes } from "@/types/SesionTypes";
+import type { CredentialsTypes, ChangePasswordConfirmTypes, RegisterTypes, ActivateTypes } from "@/types/SesionTypes";
 import baseApi from "./base.api";
 import SesionStore from "@/stores/SesionStore";
 export const getCredentials = (data: CredentialsTypes) => {
@@ -24,4 +24,9 @@ export const changePasswordConfirm = (data: ChangePasswordConfirmTypes) => {
 
 export const registerUser = (data: RegisterTypes) => {
     return baseApi.post('users/', data)
+}
+
+export const activateAccount = (data: ActivateTypes) => {
+    console.log(data)
+    return baseApi.post('users/activation/', data)
 }

@@ -1,7 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { getCredentials, getNewPAT, changePassword, changePasswordConfirm, registerUser } from '@/apis/sesion.apis'
-import type { ChangePasswordConfirmTypes, CredentialsTypes, RegisterTypes } from '@/types/SesionTypes'
+import { getCredentials, getNewPAT, activateAccount, changePassword, changePasswordConfirm, registerUser } from '@/apis/sesion.apis'
+import type { ChangePasswordConfirmTypes, ActivateTypes, CredentialsTypes, RegisterTypes } from '@/types/SesionTypes'
 import { useRouter } from 'vue-router'
 import { errorMessage, successMessage } from '@/components/messages'
 
@@ -83,6 +83,22 @@ const SesionStore = defineStore('sesion', () => {
             })
     }
 
+    const activarCuenta = async (data: ActivateTypes) => {
+        console.log('store', data)
+        alterLoading()
+        await activateAccount(data)
+            .then(() => {
+                successMessage('Cuenta activada', 'Tu cuenta ha sido activada correctamente')
+                url.push('/login')
+            })
+            .catch((error) => {
+                errorMessage(error.response.data)
+            })
+            .finally(() => {
+                alterLoading()
+            })
+    }
+
     const solicitarNuevoPAT = async () => {
         if (isLogged.value && timer.value >= 18 && timer.value <= 1799) {
             await getNewPAT()
@@ -109,7 +125,8 @@ const SesionStore = defineStore('sesion', () => {
         alterLoading,
         cambiarContraseña,
         guardarNuevaContraseña,
-        registrarUsuario
+        registrarUsuario,
+        activarCuenta
     }
 })
 
