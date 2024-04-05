@@ -25,3 +25,8 @@ export interface RegisterTypes {
     re_password: string;
     username: string;
 }
+
+export interface ActivateTypes {
+    uid: string;
+    token: string;
+}
