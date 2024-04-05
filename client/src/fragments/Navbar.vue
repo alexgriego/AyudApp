@@ -64,10 +64,10 @@
                 <form class="form-inline ml-0 ml-md-3">
                     <div class="input-group input-group-sm">
                         <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                            aria-label="Search">
+                            aria-label="Search" :value="props.dateTime" readonly>
                         <div class="input-group-append">
                             <button class="btn btn-navbar" type="submit">
-                                <i class="fas fa-search"></i>
+                                <i class="bi bi-watch"></i>
                             </button>
                         </div>
                     </div>
@@ -92,6 +92,7 @@
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" @click="salir">Salir <i class="bi bi-door-closed"></i></a>
                         </div>
+                        <SesionProgressBar />
                     </div>
 
                     <div class="btn-group" role="group" aria-label="Basic example" v-else>
@@ -111,9 +112,12 @@
 </template>
 
 <script setup lang="ts">
+const props = defineProps<{
+    dateTime: string
+}>()
 import { RouterLink } from 'vue-router';
 import SesionStore from "@/stores/SesionStore";
-import { RedirectIfNotAuth } from '@/middleware/SesionMiddleware';
+import SesionProgressBar from "@/components/SesionProgressBar.vue";
 const sesion = SesionStore()
 
 const salir = () => {
