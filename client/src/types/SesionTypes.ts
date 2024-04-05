@@ -11,3 +11,10 @@ export interface CredentialsTypes {
     username: string;
     password: string;
 }
+
+export interface ChangePasswordConfirmTypes {
+    uid: string;
+    token: string;
+    new_password: string;
+    re_new_password: string;
+}

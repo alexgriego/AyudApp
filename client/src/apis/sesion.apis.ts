@@ -1,4 +1,4 @@
-import type { CredentialsTypes } from "@/types/SesionTypes";
+import type { CredentialsTypes, ChangePasswordConfirmTypes } from "@/types/SesionTypes";
 import baseApi from "./base.api";
 import SesionStore from "@/stores/SesionStore";
 export const getCredentials = (data: CredentialsTypes) => {
@@ -12,4 +12,12 @@ export const getNewPAT = async () => {
     } else {
         throw new Error('RAT is null')
     }
+}
+
+export const changePassword = (data: string) => {
+    return baseApi.post('users/reset_password/', { email: data })
+}
+
+export const changePasswordConfirm = (data: ChangePasswordConfirmTypes) => {
+    return baseApi.post('users/reset_password_confirm/', data)
 }

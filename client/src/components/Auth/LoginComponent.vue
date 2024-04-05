@@ -10,14 +10,21 @@
             <input type="password" class="form-control form-control-border" id="password"
                 placeholder="Ingrese su contraseña" @input="handleChange" name="password" required>
         </div>
-        <button type="submit" class="btn btn-success">
-            Entrar<i class="bi bi-door-open"></i>
-        </button>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="submit" class="btn btn-success">
+                Entrar<i class="bi bi-door-open"></i>
+            </button>
+            <RouterLink :to="{ name: 'forgot-password' }" class="btn btn-warning">
+                ¿Olvidaste tu contraseña? <i class="bi bi-question-circle"></i>
+
+            </RouterLink>
+        </div>
     </form>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
 import type { CredentialsTypes } from '@/types/SesionTypes';
+import { RouterLink } from 'vue-router';
 import SesionStore from '@/stores/SesionStore';
 const store = SesionStore();
 const data = ref({} as CredentialsTypes);
