@@ -1,7 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { getCredentials, getNewPAT, changePassword, changePasswordConfirm } from '@/apis/sesion.apis'
-import type { ChangePasswordConfirmTypes, CredentialsTypes } from '@/types/SesionTypes'
+import { getCredentials, getNewPAT, changePassword, changePasswordConfirm, registerUser } from '@/apis/sesion.apis'
+import type { ChangePasswordConfirmTypes, CredentialsTypes, RegisterTypes } from '@/types/SesionTypes'
 import { useRouter } from 'vue-router'
 import { errorMessage, successMessage } from '@/components/messages'
 
@@ -52,6 +52,22 @@ const SesionStore = defineStore('sesion', () => {
             })
     }
 
+    const registrarUsuario = async (data: RegisterTypes) => {
+        alterLoading()
+        await registerUser(data)
+            .then(() => {
+                successMessage('Usuario registrado', 'Verifique su correo para activar su cuenta')
+                url.push('/login')
+            })
+            .catch((error) => {
+                errorMessage(error.response.data)
+            })
+            .finally(() => {
+                alterLoading()
+            })
+    }
+
+
     const guardarNuevaContraseña = async (data: ChangePasswordConfirmTypes) => {
         alterLoading()
         await changePasswordConfirm(data)
@@ -92,7 +108,8 @@ const SesionStore = defineStore('sesion', () => {
         logout,
         alterLoading,
         cambiarContraseña,
-        guardarNuevaContraseña
+        guardarNuevaContraseña,
+        registrarUsuario
     }
 })
 

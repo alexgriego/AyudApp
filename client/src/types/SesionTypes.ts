@@ -18,3 +18,10 @@ export interface ChangePasswordConfirmTypes {
     new_password: string;
     re_new_password: string;
 }
+
+export interface RegisterTypes {
+    email: string;
+    password: string;
+    re_password: string;
+    username: string;
+}

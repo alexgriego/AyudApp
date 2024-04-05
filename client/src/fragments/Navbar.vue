@@ -98,8 +98,8 @@
                     <div class="btn-group" role="group" aria-label="Basic example" v-else>
                         <RouterLink :to="{ name: 'login' }" type="button" class="btn btn-secondary">Entrar <i
                                 class="bi bi-door-open"></i></RouterLink>
-                        <button type="button" class="btn btn-primary">Registrarse <i
-                                class="bi bi-person-plus"></i></button>
+                        <RouterLink :to="{ name: 'register' }" type="button" class="btn btn-primary">Registrarse <i
+                                class="bi bi-person-plus"></i></RouterLink>
                     </div>
                 </li>
                 <!-- Notifications Dropdown Menu -->
