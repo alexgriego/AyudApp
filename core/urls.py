@@ -7,6 +7,9 @@ urlpatterns = [
     # APIS para autenticación
     path('api/v1/', include('djoser.urls')),
     path('api/v1/', include('djoser.urls.jwt')),
+    # APIS de Personas
+    path('api/v1/personas/', include('apps.Personas.urls')),
 ]
 
-urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name='index.html'))]
+urlpatterns += [re_path(r'^.*',
+                        TemplateView.as_view(template_name='index.html'))]
