@@ -4,9 +4,11 @@ import { getCredentials, getNewPAT, activateAccount, changePassword, changePassw
 import type { ChangePasswordConfirmTypes, ActivateTypes, CredentialsTypes, RegisterTypes } from '@/types/SesionTypes'
 import { useRouter } from 'vue-router'
 import { errorMessage, successMessage } from '@/components/messages'
+import UserStore from './UserStore'
 
 const SesionStore = defineStore('sesion', () => {
     const url = useRouter()
+    const user = UserStore()
     const PAT = ref(null)
     const RAT = ref(null)
     const isLoading = ref(false)
@@ -17,6 +19,8 @@ const SesionStore = defineStore('sesion', () => {
         await getCredentials(data).then((response) => {
             PAT.value = response.data.access
             RAT.value = response.data.refresh
+        }).then(() => {
+            user.guardarUsuario()
             successMessage('Bienvenido', 'Sesión iniciada correctamente')
         }).finally(() => {
             alterLoading()
