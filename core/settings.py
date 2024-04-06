@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'whitenoise',
     # DevApps
     'apps.accounts',
+    'apps.Personas',
 ]
 
 MIDDLEWARE = [
