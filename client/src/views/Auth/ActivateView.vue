@@ -8,4 +8,6 @@
 import ActivateComponent from '@/components/Auth/ActivateComponent.vue';
 import CardLayout from '@/components/CardLayout.vue';
 import PlusCircle from '@/assets/json/PlusCircle.json'
+import { RedirectIfAuth } from '@/middleware/SesionMiddleware';
+RedirectIfAuth();
 </script>
