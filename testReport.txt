@@ -1,11 +1,12 @@
 ============================= test session starts =============================
 platform win32 -- Python 3.12.2, pytest-8.1.1, pluggy-1.4.0
 django: version: 5.0.3, settings: core.settings (from ini)
-rootdir: C:\PycharmProjects\AyudApp
+rootdir: C:\Users\luchompi\PycharmProjects\AyudApp
 configfile: pytest.ini
 plugins: django-4.8.0
-collected 2 items
+collected 4 items
 
+apps\Personas\tests.py ..                                                [ 50%]
 apps\accounts\tests.py ..                                                [100%]
 
-============================== 2 passed in 3.47s ==============================
+============================== 4 passed in 2.43s ==============================
