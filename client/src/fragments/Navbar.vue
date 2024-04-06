@@ -81,7 +81,7 @@
 
                     <div class="btn-group" v-if="sesion.isLogged">
                         <button type="button" class="btn btn-default">Sesión iniciada como: {{
-                            usuario.user.groups?.includes('Administrador' || 'Encargado') ?
+                            usuario.user.groups?.includes('Administrador' || 'Encuestador' || 'Bodeguista') ?
                                 usuario.user.groups[0] : (usuario.user.is_superuser ? 'SuperUsuario' : 'Invitado') }}
                             - {{
                                 usuario.user.username }}
@@ -91,8 +91,9 @@
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
+
+                            <RouterLink class="dropdown-item" :to="{ name: 'profile' }">Perfil <i
+                                    class="bi bi-user"></i></RouterLink>
                             <a class="dropdown-item" href="#">Something else here</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" @click="salir">Salir <i class="bi bi-door-closed"></i></a>

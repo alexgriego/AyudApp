@@ -11,3 +11,13 @@ export interface UserTypes {
     is_superuser: boolean;
     groups: any[];
 }
+
+export interface UserFormTypes {
+    first_name: string;
+    last_name: string;
+    address: string | null;
+    city: string | 'Riohacha';
+    uid: number | null;
+    phone: string | null;
+
+}

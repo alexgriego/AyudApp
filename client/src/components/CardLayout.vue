@@ -1,9 +1,16 @@
 <template>
 
     <div class="card card-default">
-        <div class="card-header">
+        <div class="card-header" :style="{
+            display: 'flex',
+        }">
             <h5>{{ props.header }}</h5>
-            <div class="card-tools" v-for="item in props?.buttons" v-if="props?.buttons">
+            <div class="card-tools" :style="{
+                justifyContent: 'end',
+                alignItems: 'end',
+                display: 'flex',
+                flex: '1',
+            }" v-for="item in props?.buttons" v-if="props?.buttons">
                 <RouterLink :to="item.link" :class="item.class" v-if="item.type !== 'button'">
                     <i :class="item.icon"> </i>
                     {{ item.text }}

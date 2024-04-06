@@ -1,9 +1,14 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { UserTypes } from '@/types/ProfileTypes'
-import { getUserData } from '@/apis/user.apis'
+import type { UserFormTypes, UserTypes } from '@/types/ProfileTypes'
+import { getUserData, saveUserData } from '@/apis/user.apis'
+import SesionStore from './SesionStore'
+import { successMessage } from '@/components/messages'
+import { useRouter } from 'vue-router'
 const UserStore = defineStore('user', () => {
     const user = ref({} as UserTypes)
+    const sesion = SesionStore()
+    const url = useRouter()
 
     const guardarUsuario = async () => {
         await getUserData()
@@ -12,8 +17,21 @@ const UserStore = defineStore('user', () => {
             })
     }
 
-    const actualizarUsuario = (data: UserTypes) => {
-        user.value = data
+
+
+    const guardarDatosUsuario = async (data: UserFormTypes) => {
+        sesion.alterLoading()
+        await saveUserData(data)
+            .then((Response) => {
+                guardarUsuario()
+                successMessage('Hecho', 'Datos actualizados correctamente')
+                url.push('/profile')
+            })
+            .finally(() => {
+                sesion.alterLoading()
+            })
+
+
     }
 
     const vaciarUsuario = () => {
@@ -23,8 +41,8 @@ const UserStore = defineStore('user', () => {
     return {
         user,
         guardarUsuario,
-        actualizarUsuario,
-        vaciarUsuario
+        vaciarUsuario,
+        guardarDatosUsuario
     }
 })
 
