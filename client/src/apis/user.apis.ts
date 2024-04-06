@@ -9,3 +9,12 @@ export const getUserData = async () => {
         }
     })
 }
+
+export const saveUserData = async (data: any) => {
+    const sesion = SesionStore()
+    return await baseApi.patch('/users/me/', data, {
+        headers: {
+            Authorization: `JWT ${sesion.PAT}`
+        }
+    })
+}
