@@ -80,7 +80,12 @@
                 <li class="nav-item dropdown">
 
                     <div class="btn-group" v-if="sesion.isLogged">
-                        <button type="button" class="btn btn-default">Sesión iniciada como: </button>
+                        <button type="button" class="btn btn-default">Sesión iniciada como: {{
+                            usuario.user.groups?.includes('Administrador' || 'Encargado') ?
+                                usuario.user.groups[0] : (usuario.user.is_superuser ? 'SuperUsuario' : 'Invitado') }}
+                            - {{
+                                usuario.user.username }}
+                        </button>
                         <button type="button" class="btn btn-default dropdown-toggle dropdown-icon"
                             data-toggle="dropdown">
                             <span class="sr-only">Toggle Dropdown</span>
@@ -118,7 +123,9 @@ const props = defineProps<{
 import { RouterLink } from 'vue-router';
 import SesionStore from "@/stores/SesionStore";
 import SesionProgressBar from "@/components/SesionProgressBar.vue";
+import UserStore from '@/stores/UserStore';
 const sesion = SesionStore()
+const usuario = UserStore()
 
 const salir = () => {
     sesion.logout()
