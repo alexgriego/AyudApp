@@ -2,7 +2,7 @@ from functools import wraps
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import get_user_model
-
+from django.db.models import Q
 User = get_user_model()
 
 
@@ -17,18 +17,6 @@ def admin_required(func):
 
 
 def admin_or_superuser_required(func):
-    @wraps(func)
-    def wrapper(self, request, *args, **kwargs):
-        usuario = request.user
-        user_groups = usuario.groups.all()
-        if request.user.is_superuser or user_groups.filter(name='Administrador').exists():
-            return func(self, request, *args, **kwargs)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-    return wrapper
-
-
-def admin_or_superuser_or_encargado_required(func):
     @wraps(func)
     def wrapper(self, request, *args, **kwargs):
         usuario = request.user
@@ -58,6 +46,18 @@ def encuestador_required(func):
         usuario = request.user
         user_groups = usuario.groups.all()
         if user_groups.filter(name='Encuestador').exists():
+            return func(self, request, *args, **kwargs)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+    return wrapper
+
+
+def admin_or_encuenstador_required(func):
+    @wraps(func)
+    def wrapper(self, request, *args, **kwargs):
+        usuario = request.user
+        user_groups = usuario.groups.all()
+        if user_groups.filter(Q(name='Encuestador') | Q(name='Administrador')).exists():
             return func(self, request, *args, **kwargs)
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
