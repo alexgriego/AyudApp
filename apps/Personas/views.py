@@ -4,15 +4,14 @@ from rest_framework import status
 from core.permissions import admin_or_encuenstador_required
 from .serializer import BeneficiarioSerializer
 from .models import Beneficiario
-from django.shortcuts import get_object_or_404, get_list_or_404
 
 
 class BeneficiarioAPI(APIView):
-    def get_beneficiarios(self, request):
-        return get_list_or_404(Beneficiario).order_by('-created_at')[:10]
+    def get_beneficiarios(self):
+        return Beneficiario.objects.order_by('-created_at')[:10]
 
     def get_beneficiario(self, pk):
-        return get_object_or_404(Beneficiario, pk=pk)
+        return Beneficiario.objects.get(identificacion=pk)
 
     @admin_or_encuenstador_required
     def get(self, request, pk=None, format=None):
