@@ -27,3 +27,17 @@ class Beneficiario(models.Model):
 
     def __str__(self) -> str:
         return f'{self.identificacion} - {self.nombre} {self.apellido}'
+
+
+class Patrocinador(models.Model):
+    NIT = models.IntegerField(primary_key=True)
+    nombre = models.CharField(max_length=100)
+    direccion = models.CharField(max_length=100)
+    ciudad = models.CharField(max_length=100)
+    telefono = models.CharField(max_length=20, default='0')
+    correo = models.EmailField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now=True)
+    created_by = models.CharField(max_length=100, default='admin')
+
+    def __str__(self) -> str:
+        return f'{self.NIT} - {self.nombre}'
