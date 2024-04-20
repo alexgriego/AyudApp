@@ -15,7 +15,7 @@
                     <i :class="item.icon"> </i>
                     {{ item.text }}
                 </RouterLink>
-                <button :class="item.class" v-else>
+                <button :class="item.class" @click="item.callback" v-else>
                     <i :class="item.icon"></i>
                     {{ item.text }}
                 </button>

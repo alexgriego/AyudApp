@@ -5,10 +5,12 @@ import type { ChangePasswordConfirmTypes, ActivateTypes, CredentialsTypes, Regis
 import { useRouter } from 'vue-router'
 import { errorMessage, successMessage } from '@/components/messages'
 import UserStore from './UserStore'
+import BeneficiarioStore from './BeneficiariosStore'
 
 const SesionStore = defineStore('sesion', () => {
     const url = useRouter()
     const user = UserStore()
+    const beneficiario = BeneficiarioStore()
     const PAT = ref(null)
     const RAT = ref(null)
     const isLoading = ref(false)
@@ -21,6 +23,7 @@ const SesionStore = defineStore('sesion', () => {
             RAT.value = response.data.refresh
         }).then(() => {
             user.guardarUsuario()
+            beneficiario.obtenerBeneficiarios()
             successMessage('Bienvenido', 'Sesión iniciada correctamente')
         }).finally(() => {
             alterLoading()
@@ -104,7 +107,7 @@ const SesionStore = defineStore('sesion', () => {
     }
 
     const solicitarNuevoPAT = async () => {
-        if (isLogged.value && timer.value >= 18 && timer.value <= 1799) {
+        if (isLogged.value && timer.value >= 1350 && timer.value <= 1799) {
             await getNewPAT()
                 .then((response) => {
                     PAT.value = response.data.access
