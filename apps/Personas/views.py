@@ -11,12 +11,16 @@ class BeneficiarioAPI(APIView):
         return Beneficiario.objects.order_by('-created_at')[:10]
 
     def get_beneficiario(self, pk):
+        return Beneficiario.objects.filter(identificacion__istartswith=pk)
+
+    def find_beneficiario(self, pk):
         return Beneficiario.objects.get(identificacion=pk)
 
     @admin_or_encuenstador_required
     def get(self, request, pk=None, format=None):
         queryset = self.get_beneficiario(
             pk) if pk else self.get_beneficiarios()
+        print(queryset)
         serializer = BeneficiarioSerializer(
             queryset, many=True)
         return Response(serializer.data)
@@ -31,7 +35,7 @@ class BeneficiarioAPI(APIView):
 
     @admin_or_encuenstador_required
     def put(self, request, pk, format=None):
-        beneficiario = self.get_beneficiario(pk)
+        beneficiario = self.find_beneficiario(pk)
         serializer = BeneficiarioSerializer(beneficiario, data=request.data)
         if serializer.is_valid():
             serializer.save()
