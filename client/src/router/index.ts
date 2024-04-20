@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import CardLayout from '@/components/CardLayout.vue'
 import AuthRoutes from './AuthRouter'
 import ProfileRouter from './ProfileRouter'
+import beneficiariosRouter from './beneficiarios.router'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,6 +18,7 @@ const router = createRouter({
         },
         ...AuthRoutes,
         ...ProfileRouter,
+        ...beneficiariosRouter,
       ]
     }
   ]
