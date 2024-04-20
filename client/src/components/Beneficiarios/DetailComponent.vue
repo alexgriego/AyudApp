@@ -18,7 +18,6 @@
                                         {{ switchEdit ? 'Deshabilitar edición' : 'Habilitar edición' }}
                                     </label>
                                 </div>
-
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-danger" @click="eliminarRegistro">Eliminar</button>
