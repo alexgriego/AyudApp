@@ -24,7 +24,9 @@
                                 <RouterLink :to="{ name: 'beneficiarios' }" class="dropdown-item">Beneficiarios <i
                                         class="bi bi-person"></i></RouterLink>
                             </li>
-                            <li><a href="#" class="dropdown-item">Patrocinadores <i class="bi bi-building"></i> </a>
+                            <li>
+                                <RouterLink :to="{ name: 'patrocinadores' }" class="dropdown-item">Patrocinadores <i
+                                        class="bi bi-building"></i> </RouterLink>
                             </li>
 
                             <li class="dropdown-divider"></li>

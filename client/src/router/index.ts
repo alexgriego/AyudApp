@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import AuthRoutes from './AuthRouter'
 import ProfileRouter from './ProfileRouter'
 import beneficiariosRouter from './beneficiarios.router'
+import patrocinadoresRouter from './patrocinadores.router'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,6 +20,7 @@ const router = createRouter({
         ...AuthRoutes,
         ...ProfileRouter,
         ...beneficiariosRouter,
+        ...patrocinadoresRouter,
       ]
     }
   ]
