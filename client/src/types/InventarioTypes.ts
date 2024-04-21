@@ -1,3 +1,5 @@
+import type { PatrocinadorTypes } from "./PatrocinadorTypes";
+
 export interface ProductoTypes {
     codigo: string;
     nombre: string;
@@ -8,4 +10,10 @@ export interface ProductoTypes {
     fecha_vencimiento: Date | null;
     created_at: Date;
     created_by: string;
+}
+
+export interface DineroTypes {
+    id: number;
+    patrocinador: string | null;
+    cantidad: string;
 }

@@ -1,7 +1,10 @@
 import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
-import { getInventario, getProducto, createProducto, updateProducto, deleteProducto } from '@/apis/inventario.apis'
-import { successMessage } from '@/components/messages'
+import {
+    getInventario, getProducto, createProducto, updateProducto,
+    deleteProducto, getDinero, getDineros, createDinero, updateDinero, deleteDinero
+} from '@/apis/inventario.apis'
+import { errorMessage, successMessage } from '@/components/messages'
 import type { ProductoTypes } from '@/types/InventarioTypes'
 const InventarioStore = defineStore('inventario', () => {
     const url = useRouter()
@@ -40,12 +43,55 @@ const InventarioStore = defineStore('inventario', () => {
             })
     }
 
+    const obtenerDineros = async () => {
+        const { data } = await getDineros()
+        return data
+    }
+
+    const guardarDineros = async (data: any) => {
+        await createDinero(data)
+            .then((Response) => {
+                successMessage('¡Hecho!', 'Dinero creado con éxito')
+                url.push({ name: 'dineros' })
+            })
+            .catch((error) => {
+                errorMessage(error)
+            })
+
+    }
+
+    const obtenerDinero = async (id: any) => {
+        const { data } = await getDinero(id)
+        return data
+    }
+
+    const actualizarDinero = async (id: any, data: any) => {
+        await updateDinero(id, data)
+            .then((Response) => {
+                successMessage('¡Hecho!', 'Registro actualizado con éxito')
+                url.push({ name: 'dineros' })
+            })
+    }
+
+    const eliminarDinero = async (id: any) => {
+        await deleteDinero(id)
+            .then((Response) => {
+                successMessage('¡Hecho!', 'Registro eliminado con éxito')
+                url.push({ name: 'dineros' })
+            })
+    }
+
     return {
         obtenerProductos,
         obtenerProducto,
         crearProducto,
         actualizarProducto,
-        eliminarProducto
+        eliminarProducto,
+        obtenerDineros,
+        guardarDineros,
+        obtenerDinero,
+        actualizarDinero,
+        eliminarDinero,
 
     }
 })
