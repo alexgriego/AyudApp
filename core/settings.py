@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     # DevApps
     'apps.accounts',
     'apps.Personas',
+    'apps.Inventario',
 ]
 
 MIDDLEWARE = [
