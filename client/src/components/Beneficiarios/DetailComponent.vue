@@ -8,7 +8,6 @@
                     </div>
                     <div class="col">
                         <div class="flex flex-row">
-
                             <div class="form-group">
                                 <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success"
                                     :stye="{ margin: '0 0 250px 0' }">
