@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Beneficiario
+from .models import Beneficiario, Patrocinador
 
 
 admin.site.register(Beneficiario)
-# Register your models here.
+admin.site.register(Patrocinador)

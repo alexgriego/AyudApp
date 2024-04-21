@@ -9,6 +9,8 @@ urlpatterns = [
     path('api/v1/', include('djoser.urls.jwt')),
     # APIS de Personas
     path('api/v1/personas/', include('apps.Personas.urls')),
+    # APIS de Inventario
+    path('api/v1/inventario/', include('apps.Inventario.urls')),
 ]
 
 urlpatterns += [re_path(r'^.*',
