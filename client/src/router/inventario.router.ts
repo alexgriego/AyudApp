@@ -29,6 +29,22 @@ const inventarioRoutes = [
         path: '/inventario/dineros/editar/:id',
         name: 'editarDinero',
         component: () => import('@/views/Economia/DetailView.vue')
+    },
+    /**Rutas de jornadas */
+    {
+        path: '/inventario/jornadas',
+        name: 'jornadas',
+        component: () => import('@/views/Jornadas/ListView.vue')
+    },
+    {
+        path: '/inventario/jornadas/crear',
+        name: 'crearJornada',
+        component: () => import('@/views/Jornadas/CreateView.vue')
+    },
+    {
+        path: '/inventario/jornadas/detalle/:id',
+        name: 'verJornada',
+        component: () => import('@/views/Jornadas/DetailView.vue')
     }
 ]
 

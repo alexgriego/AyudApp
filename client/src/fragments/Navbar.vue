@@ -74,6 +74,11 @@
                                 <RouterLink :to="{ name: 'dineros' }" class="dropdown-item">Dineros <i
                                         class="bi bi-cash"></i></RouterLink>
                             </li>
+                            <li>
+                                <RouterLink :to="{ name: 'jornadas' }" class="dropdown-item">Jornadas <i
+                                        class="bi bi-journal-album"></i></RouterLink>
+                            </li>
+
 
                             <li class="dropdown-divider"></li>
 
@@ -168,8 +173,7 @@
 
                     <div class="btn-group" v-if="sesion.isLogged">
                         <button type="button" class="btn btn-default">ROL: {{
-                            usuario.user.groups?.includes('Administrador' || 'Encuestador' || 'Bodeguista') ?
-                                usuario.user.groups[0] : (usuario.user.is_superuser ? 'SuperUsuario' : 'Invitado') }}
+                            group || (usuario.user.is_superuser ? 'SuperUsuario' : 'Invitado') }}
                             - {{
                                 usuario.user.username }}
                         </button>
@@ -181,7 +185,6 @@
 
                             <RouterLink class="dropdown-item" :to="{ name: 'profile' }">Perfil <i
                                     class="bi bi-user"></i></RouterLink>
-                            <a class="dropdown-item" href="#">Something else here</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" @click="salir">Salir <i class="bi bi-door-closed"></i></a>
                         </div>
@@ -212,9 +215,13 @@ import { RouterLink } from 'vue-router';
 import SesionStore from "@/stores/SesionStore";
 import SesionProgressBar from "@/components/SesionProgressBar.vue";
 import UserStore from '@/stores/UserStore';
+import { ref, watchEffect } from 'vue';
 const sesion = SesionStore()
 const usuario = UserStore()
-
+const group = ref<any>()
+watchEffect(() => {
+    if (sesion.isLogged) { group.value = usuario.user.groups[0] }
+})
 const salir = () => {
     sesion.logout()
 }

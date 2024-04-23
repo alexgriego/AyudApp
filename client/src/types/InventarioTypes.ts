@@ -17,3 +17,19 @@ export interface DineroTypes {
     patrocinador: string | null;
     cantidad: string;
 }
+
+export interface EventoTypes {
+    id: number;
+    descripcion: string | null;
+    nombre: string;
+    fecha_inicio: Date;
+    es_finalizado: boolean;
+    fecha_fin: Date | null;
+    producto: ProductoTypes | null;
+    cantidad_producto: number;
+    fondos: DineroTypes | null;
+    cantidad_fondos: number;
+    created_at: Date;
+    created_by: string;
+}
+

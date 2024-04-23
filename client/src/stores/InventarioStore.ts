@@ -2,7 +2,10 @@ import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
 import {
     getInventario, getProducto, createProducto, updateProducto,
-    deleteProducto, getDinero, getDineros, createDinero, updateDinero, deleteDinero
+    deleteProducto, getDinero, getDineros, createDinero, updateDinero, deleteDinero,
+    createJornada, getJornada, getJornadas, deleteJornada,
+    searchJornada,
+    finishJornada
 } from '@/apis/inventario.apis'
 import { errorMessage, successMessage } from '@/components/messages'
 import type { ProductoTypes } from '@/types/InventarioTypes'
@@ -81,6 +84,49 @@ const InventarioStore = defineStore('inventario', () => {
             })
     }
 
+    const guardarJornada = async (data: any) => {
+        await createJornada(data)
+            .then((Response) => {
+                successMessage('¡Hecho!', 'Jornada creada con éxito')
+                url.push({ name: 'jornadas' })
+            })
+            .catch((error) => {
+                errorMessage(error)
+            })
+    }
+
+    const obtenerJornadas = async () => {
+        const { data } = await getJornadas()
+        return data
+    }
+
+    const buscarJornada = async (id: any) => {
+        const { data } = await searchJornada(id)
+        return data
+    }
+
+    const finalizarJornada = async (id: any) => {
+        await finishJornada(id)
+            .then((Response) => {
+                successMessage('¡Hecho!', 'Jornada finalizada con éxito')
+                url.push({ name: 'jornadas' })
+            })
+            .catch((error) => {
+                errorMessage(error)
+            })
+    }
+
+    const eliminarJornada = async (id: any) => {
+        await deleteJornada(id)
+            .then((Response) => {
+                successMessage('¡Hecho!', 'Jornada eliminada con éxito')
+                url.push({ name: 'jornadas' })
+            })
+            .catch((error) => {
+                errorMessage(error)
+            })
+    }
+
     return {
         obtenerProductos,
         obtenerProducto,
@@ -92,6 +138,9 @@ const InventarioStore = defineStore('inventario', () => {
         obtenerDinero,
         actualizarDinero,
         eliminarDinero,
+        guardarJornada,
+        obtenerJornadas,
+        buscarJornada, finalizarJornada, eliminarJornada
 
     }
 })

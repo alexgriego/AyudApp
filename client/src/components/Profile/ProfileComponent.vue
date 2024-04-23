@@ -8,8 +8,7 @@
                 <div class="row">
                     <div class="mb-3">
                         <h3>Rol de usuario : {{
-                            usuario.user.groups?.includes('Administrador' || 'Encuestador' || 'Bodeguista') ?
-                                usuario.user.groups[0] : (usuario.user.is_superuser ? 'SuperUsuario' : 'Invitado') }} <i
+                            group || (usuario.user.is_superuser ? 'SuperUsuario' : 'Invitado') }} <i
                                 class="bi bi-patch-check-fill"></i>
                         </h3>
                     </div>
@@ -70,4 +69,6 @@
 <script setup lang="ts">
 import UserStore from '@/stores/UserStore';
 const usuario = UserStore()
+const group = usuario.user.groups[0]
+console.log(group)
 </script>
