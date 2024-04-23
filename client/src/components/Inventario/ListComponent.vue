@@ -36,7 +36,6 @@ const store = InventarioStore();
 const search = ref<string>('');
 
 watchEffect(async () => {
-    console.log(search.value);
     if (search.value.length > 0) {
         data.value = await store.obtenerProducto(search.value);
     } else {

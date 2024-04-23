@@ -106,3 +106,68 @@ export const deleteDinero = async (id: any) => {
         }
     });
 };
+
+export const getJornadas = async () => {
+    const store = SesionStore();
+    return await baseApi.get("/inventario/jornadas/",
+        {
+            headers: {
+                "Authorization": `JWT ${store.PAT}`
+            }
+        }
+    );
+}
+
+export const getJornada = async (id: any) => {
+    const store = SesionStore();
+    return await baseApi.get(`/inventario/jornadas/${id}/`,
+        {
+            headers: {
+                "Authorization": `JWT ${store.PAT}`
+            }
+        }
+    );
+};
+
+export const createJornada = async (data: any) => {
+    const store = SesionStore();
+    return await baseApi.post("/inventario/jornadas/", data,
+        {
+            headers: {
+                "Authorization": `JWT ${store.PAT}`
+            }
+        }
+    );
+};
+
+
+export const deleteJornada = async (id: any) => {
+    const store = SesionStore();
+    return await baseApi.delete(`/inventario/jornadas/search/${id}/`, {
+        headers: {
+            "Authorization": `JWT ${store.PAT}`
+        }
+    });
+};
+
+export const searchJornada = async (id: any) => {
+    const store = SesionStore();
+    return await baseApi.get(`/inventario/jornadas/search/${id}/`,
+        {
+            headers: {
+                "Authorization": `JWT ${store.PAT}`
+            }
+        }
+    );
+}
+
+export const finishJornada = async (id: any) => {
+    const store = SesionStore();
+    return await baseApi.put(`/inventario/jornadas/search/${id}/`, {},
+        {
+            headers: {
+                "Authorization": `JWT ${store.PAT}`
+            }
+        }
+    );
+}
