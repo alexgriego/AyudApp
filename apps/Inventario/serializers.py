@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from .models import Producto, Dinero, JornadaAyuda, DineroJornada, ProductoJornada
-
+from .models import Producto, Dinero, JornadaAyuda
 
 class ProductoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,3 +16,10 @@ class DineroSerializer(serializers.ModelSerializer):
 
     def get_patrocinador(self, obj):
         return obj.patrocinador.nombre if obj.patrocinador is not None else None
+
+
+class JornadaAyudaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JornadaAyuda
+        fields = '__all__'
+        

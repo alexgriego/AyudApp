@@ -11,6 +11,11 @@ urlpatterns = [
     p('dineros/', v.DineroAPI.as_view()),
     p('dineros/<str:pk>/', v.DineroAPI.as_view()),
 
+    # APIS de jornadas
+    p('jornadas/', v.JornadaAyudaAPI.as_view()),
+    p('jornadas/<str:pk>/', v.JornadaAyudaAPI.as_view()),
+    p('jornadas/search/<str:pk>/', v.JornadasAPI.as_view()),
+
 ]
 
 urlpatterns = fsp(urlpatterns)
