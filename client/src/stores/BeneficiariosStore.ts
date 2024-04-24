@@ -20,9 +20,9 @@ const BeneficiarioStore = defineStore('beneficiario', () => {
             })
     }
     const obtenerBeneficiario = async (identificacion: number) => {
-        const response = await getBeneficiario(identificacion)
-        console.log(response)
-        return response.data
+        const { data } = await getBeneficiario(identificacion)
+        console.log(data)
+        return data
     }
 
     const crearBeneficiario = async (beneficiario: BeneficiarioTypes) => {
