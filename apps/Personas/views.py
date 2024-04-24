@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from apps.Familia.models import BeneficiariosFamilia
 from core.permissions import admin_or_encuenstador_required
 from .serializer import BeneficiarioSerializer, PatrocinadorSerializer
 from .models import Beneficiario, Patrocinador
@@ -90,3 +91,18 @@ class PatrocinadoresAPI(APIView):
         patrocinador = self.get_patrocinador(pk)
         patrocinador.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class DetalleBeneficiarioAPI(APIView):
+    @admin_or_encuenstador_required
+    def get(self, request, pk):
+        queryset = Beneficiario.objects.get(identificacion=pk)
+        q = BeneficiariosFamilia.objects.get(beneficiario=queryset)
+        data = {
+            'tipo_iden': queryset.tipo_id,
+            'identificacion': queryset.identificacion,
+            'nombre': queryset.nombre,
+            'apellido': queryset.apellido,
+            'parentesco': q.parentesco,
+        }
+        return Response(data, status=status.HTTP_200_OK)

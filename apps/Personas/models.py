@@ -21,6 +21,7 @@ class Beneficiario(models.Model):
     es_discapacitado = models.BooleanField(default=False)
     es_victima = models.BooleanField(default=False)
     es_desplazado = models.BooleanField(default=False)
+    es_censado = models.BooleanField(default=False)
     observaciones = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now=True)
     created_by = models.CharField(max_length=100, default='admin')

@@ -11,6 +11,9 @@ urlpatterns = [
     path('api/v1/personas/', include('apps.Personas.urls')),
     # APIS de Inventario
     path('api/v1/inventario/', include('apps.Inventario.urls')),
+
+    # apis de censos
+    path('api/v1/censos/', include('apps.Familia.urls')),
 ]
 
 urlpatterns += [re_path(r'^.*',
