@@ -52,7 +52,8 @@ const patrocinador = ref<string | null>('')
 
 
 const eliminarRegistro = async () => {
-    await store.eliminarDinero(id)
+    console.log(data.value.id)
+    await store.eliminarDinero(data.value.id)
     url.push({ name: 'economia' })
 }
 
