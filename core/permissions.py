@@ -64,6 +64,18 @@ def admin_or_encuenstador_required(func):
     return wrapper
 
 
+def admin_or_bodeguista_required(func):
+    @wraps(func)
+    def wrapper(self, request, *args, **kwargs):
+        usuario = request.user
+        user_groups = usuario.groups.all()
+        if user_groups.filter(Q(name='Bodeguista') | Q(name='Administrador')).exists():
+            return func(self, request, *args, **kwargs)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+    return wrapper
+
+
 def login_required(func):
     @wraps(func)
     def wrapper(self, request, *args, **kwargs):
