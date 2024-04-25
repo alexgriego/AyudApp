@@ -63,6 +63,9 @@ class DineroAPI(APIView):
     def find_dinero(self, pk):
         return Dinero.objects.get(patrocinador__NIT=pk)
 
+    def find_dinero_by_id(self, pk):
+        return Dinero.objects.get(id=pk)
+
     @ admin_or_encuenstador_required
     def get(self, request, pk=None, format=None):
         queryset = self.get_dinero(
@@ -100,20 +103,16 @@ class DineroAPI(APIView):
 
     @ admin_or_encuenstador_required
     def put(self, request, pk, format=None):
-        dinero = self.find_dinero(pk)
-        try:
-            dinero.patrocinador = Patrocinador.objects.get(
-                pk=request.data['patrocinador']) if request.data['patrocinador'] else None
-            dinero.cantidad = request.data['cantidad']
-            dinero.save()
+        dinero = self.find_dinero_by_id(pk)
+        serializer = DineroSerializer(dinero, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
             return Response(status=status.HTTP_200_OK)
-        except Exception as e:
-            print(e)
-            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @ admin_or_encuenstador_required
     def delete(self, request, pk, format=None):
-        dinero = self.find_dinero(pk)
+        dinero = self.find_dinero_by_id(pk)
         dinero.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -160,7 +159,6 @@ class JornadaAyudaAPI(APIView):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-    
 
 class JornadasAPI(APIView):
     def find_jornada(self, pk):
@@ -189,10 +187,9 @@ class JornadasAPI(APIView):
         jornada.fecha_fin = dt.now().date()
         jornada.save()
         return Response(status=status.HTTP_200_OK)
-    
+
     @ admin_or_encuenstador_required
     def delete(self, request, pk, format=None):
         jornada = self.find_jornada(pk)
         jornada.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
