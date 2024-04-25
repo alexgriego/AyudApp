@@ -2,20 +2,25 @@
     <!-- Navbar -->
     <nav class="main-header ml-0 mb-2 navbar navbar-expand-md navbar-light navbar-white">
         <div class="container">
-            <RouterLink :to="{ name: 'home' }" class="navbar-brand">
+            <div class="navbar-brand">
                 <span class="brand-text font-weight-light">AyudApp <i class="bi bi-postcard-heart"></i></span>
-            </RouterLink>
+            </div>
 
             <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+            <div class="collapse navbar-collapse order-3" id="navbarCollapse" v-if="sesion.isLogged">
                 <!-- Left navbar links -->
                 <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <RouterLink :to="{ name: 'home' }" class="nav-link">Inicio <i class="bi bi-house"></i>
+                        </RouterLink>
+                    </li>
                     <!--Personas-->
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown"
+                        v-if="(usuario.userGroup === 'Administrador' || usuario.userGroup === 'Encuestador')">
                         <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false" class="nav-link dropdown-toggle">Personas <i
                                 class="bi bi-person-circle"></i></a>
@@ -28,64 +33,31 @@
                                 <RouterLink :to="{ name: 'patrocinadores' }" class="dropdown-item">Patrocinadores <i
                                         class="bi bi-building"></i> </RouterLink>
                             </li>
-
-                            <li class="dropdown-divider"></li>
-
-                            <!-- Level two dropdown-->
-                            <li class="dropdown-submenu dropdown-hover">
-                                <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false"
-                                    class="dropdown-item dropdown-toggle">Hover for action</a>
-                                <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
-                                    <li>
-                                        <a tabindex="-1" href="#" class="dropdown-item">level 2</a>
-                                    </li>
-
-                                    <!-- Level three dropdown-->
-                                    <li class="dropdown-submenu">
-                                        <a id="dropdownSubMenu3" href="#" role="button" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false"
-                                            class="dropdown-item dropdown-toggle">level 2</a>
-                                        <ul aria-labelledby="dropdownSubMenu3" class="dropdown-menu border-0 shadow">
-                                            <li><a href="#" class="dropdown-item">3rd level</a></li>
-                                            <li><a href="#" class="dropdown-item">3rd level</a></li>
-                                        </ul>
-                                    </li>
-                                    <!-- End Level three -->
-
-                                    <li><a href="#" class="dropdown-item">level 2</a></li>
-                                    <li><a href="#" class="dropdown-item">level 2</a></li>
-                                </ul>
-                            </li>
-                            <!-- End Level two -->
                         </ul>
                     </li>
                     <!--Inventario-->
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown" v-if="usuario.userGroup !== 'Encuestador'">
                         <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false" class="nav-link dropdown-toggle">Inventario <i
                                 class="bi bi-pie-chart"></i></a>
                         <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                            <li>
+                            <li v-if="(usuario.userGroup === 'Administrador' || usuario.userGroup === 'Bodeguista')">
                                 <RouterLink :to="{ name: 'inventario' }" class="dropdown-item">Productos <i
                                         class="bi bi-box"></i> </RouterLink>
                             </li>
-                            <li>
+                            <li v-if="(usuario.userGroup === 'Administrador')">
                                 <RouterLink :to="{ name: 'dineros' }" class="dropdown-item">Dineros <i
                                         class="bi bi-cash"></i></RouterLink>
                             </li>
-                            <li>
+                            <li v-if="(usuario.userGroup === 'Administrador')">
                                 <RouterLink :to="{ name: 'jornadas' }" class="dropdown-item">Jornadas <i
                                         class="bi bi-journal-album"></i></RouterLink>
                             </li>
-
-
-
-
                         </ul>
                     </li>
                     <!---Gestión-->
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown"
+                        v-if="(usuario.userGroup === 'Administrador' || usuario.userGroup === 'Encuestador')">
                         <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false" class="nav-link dropdown-toggle">Censos <i class="bi bi-flag"></i></a>
                         <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
