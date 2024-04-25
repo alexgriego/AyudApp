@@ -1,5 +1,5 @@
 <template>
-    <table class="table table-striped table-hover">
+    <table class="table table-striped table-hover" v-if="data.length">
         <thead>
             <tr>
                 <th scope="col">Patrocinador</th>
@@ -18,6 +18,9 @@
             </tr>
         </tbody>
     </table>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert" v-else>
+        <strong>404!</strong> No hay datos que mostrar.
+    </div>
 </template>
 <script setup lang="ts">
 import InventarioStore from '@/stores/InventarioStore';
