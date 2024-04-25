@@ -50,12 +50,13 @@ const data = ref({} as DineroTypes)
 const url = useRouter()
 
 const props = defineProps<{
-    data?: DineroTypes
+    data: DineroTypes
 }>()
 
 watchEffect(async () => {
     if (props.data) {
         data.value = props.data
+        console.log(props.data)
     }
     search.value && (patrocinadores_list.value = await store.obtenerPatrocinador(search.value))
 })
@@ -75,13 +76,18 @@ const clearPatrocinador = () => {
 const handleSubmit = (e: any) => {
     e.preventDefault()
     let id = url.currentRoute.value.params.id
+    let patrocinadorNIT = ''
+    if (patrocinadorSelected.value.NIT) {
+        patrocinadorNIT = patrocinadorSelected.value.NIT.toString()
+    }
+    data.value = { ...data.value, patrocinador: patrocinadorNIT }
 
-    if (!props.data) {
-        patrocinadorSelected.value && (data.value = { ...data.value, patrocinador: patrocinadorSelected.value.NIT.toString() })
+    if (id) {
+        console.log(props.data?.id)
+        donacion.actualizarDinero(props.data?.id, data.value)
     }
     else {
-        data.value = patrocinadorSelected.value ? ({ ...data.value, patrocinador: patrocinadorSelected.value.NIT.toString() }) : ({ ...data.value, patrocinador: id.toString() })
+        donacion.guardarDineros(data.value)
     }
-    id ? donacion.actualizarDinero(id, data.value) : donacion.guardarDineros(data.value)
 }
 </script>

@@ -5,6 +5,7 @@ from apps.Familia.models import BeneficiariosFamilia
 from core.permissions import admin_or_encuenstador_required
 from .serializer import BeneficiarioSerializer, PatrocinadorSerializer
 from .models import Beneficiario, Patrocinador
+from django.db.models import Q
 
 
 class BeneficiarioAPI(APIView):
@@ -106,3 +107,8 @@ class DetalleBeneficiarioAPI(APIView):
             'parentesco': q.parentesco,
         }
         return Response(data, status=status.HTTP_200_OK)
+
+
+class PatrocinadorSearch(APIView):
+    def get_patrocinador(self, pk):
+        return Patrocinador.objects.get(Q(NIT=pk) | Q(nombre=pk))

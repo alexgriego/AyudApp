@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from apps.Personas.models import Patrocinador
-from core.permissions import admin_or_encuenstador_required
+from core.permissions import admin_or_bodeguista_required, admin_required
 from .models import Producto, Dinero, JornadaAyuda
 from .serializers import ProductoSerializer, DineroSerializer, JornadaAyudaSerializer
 from django.db.models import Q
@@ -20,7 +20,7 @@ class ProductoAPI(APIView):
     def find_producto(self, pk):
         return Producto.objects.get(codigo=pk)
 
-    @ admin_or_encuenstador_required
+    @ admin_or_bodeguista_required
     def get(self, request, pk=None, format=None):
         queryset = self.get_producto(
             pk) if pk else self.get_productos()
@@ -28,7 +28,7 @@ class ProductoAPI(APIView):
             queryset, many=True)
         return Response(serializer.data)
 
-    @ admin_or_encuenstador_required
+    @ admin_or_bodeguista_required
     def post(self, request, format=None):
         serializer = ProductoSerializer(data=request.data)
         if serializer.is_valid():
@@ -36,7 +36,7 @@ class ProductoAPI(APIView):
             return Response(status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @ admin_or_encuenstador_required
+    @ admin_or_bodeguista_required
     def put(self, request, pk, format=None):
         producto = self.find_producto(pk)
         serializer = ProductoSerializer(producto, data=request.data)
@@ -45,7 +45,7 @@ class ProductoAPI(APIView):
             return Response(status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @ admin_or_encuenstador_required
+    @ admin_or_bodeguista_required
     def delete(self, request, pk, format=None):
         producto = self.get_producto(pk)
         producto.delete()
@@ -63,7 +63,10 @@ class DineroAPI(APIView):
     def find_dinero(self, pk):
         return Dinero.objects.get(patrocinador__NIT=pk)
 
-    @ admin_or_encuenstador_required
+    def find_dinero_by_id(self, pk):
+        return Dinero.objects.get(id=pk)
+
+    @ admin_required
     def get(self, request, pk=None, format=None):
         queryset = self.get_dinero(
             pk) if pk else self.get_dineros()
@@ -71,7 +74,7 @@ class DineroAPI(APIView):
             queryset, many=True)
         return Response(serializer.data)
 
-    @admin_or_encuenstador_required
+    @admin_required
     def post(self, request):
         print('post')
         data = request.data
@@ -98,22 +101,18 @@ class DineroAPI(APIView):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-    @ admin_or_encuenstador_required
+    @admin_required
     def put(self, request, pk, format=None):
-        dinero = self.find_dinero(pk)
-        try:
-            dinero.patrocinador = Patrocinador.objects.get(
-                pk=request.data['patrocinador']) if request.data['patrocinador'] else None
-            dinero.cantidad = request.data['cantidad']
-            dinero.save()
+        dinero = self.find_dinero_by_id(pk)
+        serializer = DineroSerializer(dinero, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
             return Response(status=status.HTTP_200_OK)
-        except Exception as e:
-            print(e)
-            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @ admin_or_encuenstador_required
+    @admin_required
     def delete(self, request, pk, format=None):
-        dinero = self.find_dinero(pk)
+        dinero = self.find_dinero_by_id(pk)
         dinero.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -125,7 +124,7 @@ class JornadaAyudaAPI(APIView):
     def get_jornada(self, pk):
         return JornadaAyuda.objects.filter(nombre__icontains=pk).order_by('-created_at')
 
-    @ admin_or_encuenstador_required
+    @admin_required
     def get(self, request, pk=None, format=None):
         queryset = self.get_jornada(
             pk) if pk else self.get_jornadas()
@@ -133,7 +132,7 @@ class JornadaAyudaAPI(APIView):
             queryset, many=True)
         return Response(serializer.data)
 
-    @ admin_or_encuenstador_required
+    @admin_required
     def post(self, request, format=None):
         data = request.data
         q = {
@@ -160,20 +159,19 @@ class JornadaAyudaAPI(APIView):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-    
 
 class JornadasAPI(APIView):
     def find_jornada(self, pk):
         return JornadaAyuda.objects.get(id=pk)
 
-    @admin_or_encuenstador_required
+    @admin_required
     def get(self, request, pk=None, format=None):
         queryset = self.find_jornada(pk)
         serializer = JornadaAyudaSerializer(
             queryset)
         return Response(serializer.data)
 
-    @admin_or_encuenstador_required
+    @admin_required
     def put(self, request, pk, format=None):
         jornada = self.find_jornada(pk)
         print(jornada)
@@ -189,10 +187,9 @@ class JornadasAPI(APIView):
         jornada.fecha_fin = dt.now().date()
         jornada.save()
         return Response(status=status.HTTP_200_OK)
-    
-    @ admin_or_encuenstador_required
+
+    @admin_required
     def delete(self, request, pk, format=None):
         jornada = self.find_jornada(pk)
         jornada.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
