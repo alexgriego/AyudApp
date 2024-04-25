@@ -7,6 +7,7 @@ import { successMessage } from '@/components/messages'
 import { useRouter } from 'vue-router'
 const UserStore = defineStore('user', () => {
     const user = ref({} as UserTypes)
+    const userGroup = ref<string>('')
     const sesion = SesionStore()
     const url = useRouter()
 
@@ -14,6 +15,7 @@ const UserStore = defineStore('user', () => {
         await getUserData()
             .then((Response) => {
                 user.value = Response.data
+                userGroup.value = Response.data.groups[0]
             })
     }
 
@@ -42,7 +44,8 @@ const UserStore = defineStore('user', () => {
         user,
         guardarUsuario,
         vaciarUsuario,
-        guardarDatosUsuario
+        guardarDatosUsuario,
+        userGroup
     }
 })
 

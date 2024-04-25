@@ -22,8 +22,12 @@
             <p><strong>Cantidad: </strong>{{ data.cantidad }}</p>
             <p><strong>Descripción: </strong>{{ data.descripcion }}</p>
             <p><strong>Tipo: </strong>{{ data.tipo }}</p>
-            <p><strong>Es perecedero: </strong>{{ data.es_perecedero }}</p>
+            <p><strong>Es perecedero: </strong>{{ data.es_perecedero ? 'Sí' : 'No' }}</p>
             <p><strong>Fecha de vencimiento: </strong>{{ data.fecha_vencimiento || 'N/A' }}</p>
+            <article>
+                <h6>Detalles:</h6>
+                <p>{{ data.descripcion }}</p>
+            </article>
         </div>
         <div class="col col-auto" v-if="switchEdit">
             <div class="card">

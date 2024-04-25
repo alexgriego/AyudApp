@@ -11,7 +11,6 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
       children: [
         {
           path: '',
