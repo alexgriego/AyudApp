@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+import dj_database_url
 from datetime import timedelta as td
 import os
 from pathlib import Path
@@ -28,7 +29,14 @@ SECRET_KEY = 'django-insecure-c6#+vge-so2-i^j8o&7sxz88()qn+bi+5s2knf5m3gncahaohu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
+# Edit the following line and place your railway URL, and your custom URL in the array.
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.up.railway.app",
+    # NOTE: Place your custom url here if any
+    "https://ayudapp-production.up.railway.app/"
+]
 
 
 # Application definition
@@ -91,8 +99,18 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        # Env config
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'ricoNScVghjlzckaiqRtAfPSCPtxpsib',
+        'HOST': 'roundhouse.proxy.rlwy.net',
+        'PORT': '33037'
+
+
+        # Local config
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
