@@ -17,21 +17,14 @@
                 <td>
                     <RouterLink :to="{ name: 'censo', params: { id: item.id } }" type="button" class="btn btn-success">
                         <i class="bi bi-search"></i>
-<<<<<<< HEAD
-                        </RouterLink>
-=======
                     </RouterLink>
->>>>>>> alpha
                 </td>
             </tr>
         </tbody>
     </table>
-<<<<<<< HEAD
-=======
     <div class="alert alert-warning alert-dismissible fade show" role="alert" v-else>
         <strong>404!</strong> No hay registros que ver.
     </div>
->>>>>>> alpha
 </template>
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'

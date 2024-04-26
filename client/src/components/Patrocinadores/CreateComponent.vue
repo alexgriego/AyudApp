@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-body">
             <h4>Ingrese los datos solicitados</h4>
-            <FormComponent />
+            <FormComponent :data="null" />
         </div>
     </div>
 </template>
