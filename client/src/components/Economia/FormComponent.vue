@@ -50,7 +50,7 @@ const data = ref({} as DineroTypes)
 const url = useRouter()
 
 const props = defineProps<{
-    data: DineroTypes
+    data: DineroTypes | null
 }>()
 
 watchEffect(async () => {

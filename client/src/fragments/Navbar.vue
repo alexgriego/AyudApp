@@ -20,7 +20,7 @@
                     </li>
                     <!--Personas-->
                     <li class="nav-item dropdown"
-                        v-if="(usuario.userGroup === 'Administrador' || usuario.userGroup === 'Encuestador')">
+                        v-if="(usuario.userGroup === 'Administrador' || usuario.userGroup === 'Encuestador' || usuario.userGroup === 'Bodeguista')">
                         <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false" class="nav-link dropdown-toggle">Personas <i
                                 class="bi bi-person-circle"></i></a>
@@ -29,7 +29,7 @@
                                 <RouterLink :to="{ name: 'beneficiarios' }" class="dropdown-item">Beneficiarios <i
                                         class="bi bi-person"></i></RouterLink>
                             </li>
-                            <li>
+                            <li v-if="usuario.userGroup === 'Administrador' || usuario.userGroup === 'Bodeguista'">
                                 <RouterLink :to="{ name: 'patrocinadores' }" class="dropdown-item">Patrocinadores <i
                                         class="bi bi-building"></i> </RouterLink>
                             </li>
