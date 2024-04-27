@@ -31,11 +31,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-# Edit the following line and place your railway URL, and your custom URL in the array.
-CSRF_TRUSTED_ORIGINS = [
-    '*'
-]
-
 
 # Application definition
 
@@ -97,22 +92,13 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        # Env config
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'ricoNScVghjlzckaiqRtAfPSCPtxpsib',
-        'HOST': 'roundhouse.proxy.rlwy.net',
-        'PORT': '33037'
-
-
         # Local config
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
-
+DATABASES["default"] = dj_database_url.parse("postgres://ayudapp_user:E4BEYoT1fB49VhQWVVUQt4LdUIhanRAL@dpg-comhjeocmk4c739lq6fg-a.oregon-postgres.render.com/ayudapp")
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
