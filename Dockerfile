@@ -9,7 +9,6 @@ RUN pip install -r requirements.txt
 
 RUN python manage.py collectstatic --no-input
 
-RUN python manage.py migrate
 
 EXPOSE 8000
 
