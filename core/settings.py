@@ -98,7 +98,7 @@ DATABASES = {
     }
 }
 
-DATABASES["default"] = dj_database_url.parse("postgres://ayudapp_user:E4BEYoT1fB49VhQWVVUQt4LdUIhanRAL@dpg-comhjeocmk4c739lq6fg-a.oregon-postgres.render.com/ayudapp")
+DATABASES["default"] = dj_database_url.parse("postgresql://ayudapp_db_user:Q5OPvY2gsWoALnh7baLb30FOH08ivO92@dpg-cs1ihdo8fa8c73d0pegg-a.oregon-postgres.render.com/ayudapp_db")
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
