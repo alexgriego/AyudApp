@@ -55,20 +55,26 @@
                 </div>
                 <ul class="list-group" v-if="searchResult.length > 0" v-for="item in searchResult">
                     <li class="list-group-item" @click="() => { selectedItem.value = item }">
-                        {{ tipo_insumo === 'Insumos' ? (item.codigo + ' - ' + item.nombre) : (item.patrocinador + ' - '
-                            + item.cantidad) }} <i class="bi bi-check"
+                        {{ tipo_insumo === 'Insumos' ? (item.codigo + ' - ' + item.nombre + ' - '+ item.cantidad +' Unds. disponibles') : (item.patrocinador + ' - $'
+                            + item.cantidad +'COP') }} <i class="bi bi-check"
                             v-if="tipo_insumo !== 'No registra' && selectedItem.value === item"></i>
                     </li>
                 </ul>
                 <div class="form-group" v-if="habilitar_insumos">
                     <label for="cantidad">Cantidad <i class="bi bi-clipboard"></i></label>
                     <input type="number" class="form-control form-control-border" id="cantidad" name="cantidad"
-                        v-model="cantidad" :required="!cantidad && habilitar_insumos" />
-
+                        v-model="cantidad" :required="!cantidad && habilitar_insumos"/>
+                    
+                    <span class="text-danger" v-if="selectedItem.value && tipo_insumo === 'Dinero' && cantidad > selectedItem.value.cantidad">
+                        La cantidad debe ser menor o igual a {{ selectedItem.value.cantidad }} COP
+                    </span>
+                    <span class="text-danger" v-if="selectedItem.value && tipo_insumo === 'Insumos' && cantidad > selectedItem.value.cantidad">
+                        La cantidad debe ser menor o igual a {{ selectedItem.value.cantidad }} unidades disponibles
+                    </span>
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Procesar <i class="bi bi-save"></i></button>
+        <button type="submit" class="btn btn-primary" :disabled="isSubmitDisabled">Procesar <i class="bi bi-save"></i></button>
     </form>
 </template>
 <script setup lang="ts">
@@ -76,6 +82,8 @@ import InventarioStore from '@/stores/InventarioStore';
 import type { EventoTypes } from '@/types/InventarioTypes';
 import { ref, watchEffect } from 'vue'
 import { warningMessage } from '../messages';
+import { computed } from 'vue'
+
 const data = ref({} as EventoTypes)
 const store = InventarioStore()
 const tipo_insumo = ref('No registra')
@@ -85,7 +93,6 @@ const searchResult = ref([] as any[])
 const selectedItem = ref({} as any)
 const cantidad = ref(0)
 
-
 watchEffect(async () => {
     if (tipo_insumo.value === 'Dinero' && search.value.length > 0) {
         searchResult.value = await store.obtenerDinero(search.value)
@@ -93,6 +100,7 @@ watchEffect(async () => {
     } else if (tipo_insumo.value === 'Insumos' && search.value.length > 0) {
         searchResult.value = await store.obtenerProducto(search.value)
         data.value = { ...data.value, producto: selectedItem.value.codigo, fondos: null, cantidad_fondos: 0 }
+        console.log(data)
     }
 
     if (tipo_insumo.value === 'No registra') {
@@ -103,7 +111,6 @@ watchEffect(async () => {
 const handleInput = (e: any) => {
     data.value = { ...data.value, [e.target.name]: e.target.value }
 }
-
 
 const handleSubmit = async (e: any) => {
 
@@ -118,4 +125,16 @@ const handleSubmit = async (e: any) => {
         store.guardarJornada(data.value)
     })
 }
+
+const isSubmitDisabled = computed(() => {
+    if (!habilitar_insumos.value) return false;
+    if (!selectedItem.value) return true;
+    if (tipo_insumo.value === 'Dinero') {
+        return cantidad.value > selectedItem.value.cantidad;
+    }
+    if (tipo_insumo.value === 'Insumos') {
+        return cantidad.value > selectedItem.value.cantidad;
+    }
+    return true;
+})
 </script>
