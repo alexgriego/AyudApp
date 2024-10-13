@@ -5,6 +5,7 @@ export interface ProductoTypes {
     nombre: string;
     descripcion: string | null;
     cantidad: number;
+    patrocinador: string | null;
     tipo: string;
     es_perecedero: boolean;
     fecha_vencimiento: Date | null;
