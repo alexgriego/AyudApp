@@ -9,13 +9,19 @@
                 </div>
             </div>
             <div class="col">
-                <div class="col">
-                    <div class="form-group">
-                        <label for="fecha_inicio">Fecha de incio <i class="bi bi-calendar"></i></label>
-                        <input type="date" class="form-control form-control-border" id="fecha_inicio"
-                            name="fecha_inicio" @input="handleInput" v-model="data.fecha_inicio"
-                            :required="!data.fecha_inicio">
-                    </div>
+                <div class="form-group">
+                    <label for="fecha_inicio">Fecha de inicio <i class="bi bi-calendar"></i></label>
+                    <input type="date" class="form-control form-control-border" id="fecha_inicio"
+                        name="fecha_inicio" @input="handleInput" v-model="data.fecha_inicio"
+                        :min="currentDate" :required="!data.fecha_inicio">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="fecha_fin">Fecha de finalización <i class="bi bi-calendar"></i></label>
+                    <input type="date" class="form-control form-control-border" id="fecha_fin"
+                        name="fecha_fin" @input="handleInput" v-model="data.fecha_fin"
+                        :min="currentDate" :required="!data.fecha_fin">
                 </div>
             </div>
         </div>
@@ -84,7 +90,20 @@ import { ref, watchEffect } from 'vue'
 import { warningMessage } from '../messages';
 import { computed } from 'vue'
 
-const data = ref({} as EventoTypes)
+const data = ref<EventoTypes>({
+  id: 0,
+  descripcion: null,
+  nombre: '',
+  fecha_inicio: new Date(),
+  es_finalizado: false,
+  fecha_fin: null,
+  producto: null,
+  cantidad_producto: 0,
+  fondos: null,
+  cantidad_fondos: 0,
+  created_at: new Date(),
+  created_by: ''
+});
 const store = InventarioStore()
 const tipo_insumo = ref('No registra')
 const habilitar_insumos = ref(false)
@@ -111,6 +130,11 @@ watchEffect(async () => {
 const handleInput = (e: any) => {
     data.value = { ...data.value, [e.target.name]: e.target.value }
 }
+
+const currentDate = computed(() => {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+});
 
 const handleSubmit = async (e: any) => {
 
