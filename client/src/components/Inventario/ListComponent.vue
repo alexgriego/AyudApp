@@ -42,7 +42,4 @@ watchEffect(async () => {
         data.value = await store.obtenerProductos();
     }
 })
-
-
-
 </script>
