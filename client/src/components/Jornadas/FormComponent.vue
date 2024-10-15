@@ -111,15 +111,15 @@ const search = ref<string>('')
 const searchResult = ref([] as any[])
 const selectedItem = ref({} as any)
 const cantidad = ref(0)
-
 watchEffect(async () => {
+   
     if (tipo_insumo.value === 'Dinero' && search.value.length > 0) {
         searchResult.value = await store.obtenerDinero(search.value)
         data.value = { ...data.value, fondos: selectedItem.value.id, producto: null, cantidad_producto: 0 }
     } else if (tipo_insumo.value === 'Insumos' && search.value.length > 0) {
-        searchResult.value = await store.obtenerProducto(search.value)
+      
+        searchResult.value = await store.obtenerProductosJornadas(search.value)
         data.value = { ...data.value, producto: selectedItem.value.codigo, fondos: null, cantidad_fondos: 0 }
-        console.log(data)
     }
 
     if (tipo_insumo.value === 'No registra') {
