@@ -1,8 +1,13 @@
 <template>
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Lider de familia: {{ lider.nombre }} {{ lider.apellido }} <button type="button"
+            <h4 class="card-title">Lider de familia: {{ lider.nombre }} {{ lider.apellido }} 
+                <div className="btn btn-group">
+                    <button type="button"
+                    class="btn btn-success" @click="">Añadir miembro</button>
+                    <button type="button"
                     class="btn btn-danger" @click="eliminarFamilia">Borrar nucleo</button>
+                </div>
             </h4>
             <br>
             <div class="card-body">
