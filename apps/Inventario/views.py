@@ -124,7 +124,7 @@ class JornadaAyudaAPI(APIView):
     def get_jornada(self, pk):
         return JornadaAyuda.objects.filter(nombre__icontains=pk).order_by('-created_at')
 
-    @admin_required
+    @admin_or_bodeguista_required
     def get(self, request, pk=None, format=None):
         queryset = self.get_jornada(
             pk) if pk else self.get_jornadas()
@@ -132,7 +132,7 @@ class JornadaAyudaAPI(APIView):
             queryset, many=True)
         return Response(serializer.data)
 
-    @admin_required
+    @admin_or_bodeguista_required
     def post(self, request, format=None):
         data = request.data
         q = {
@@ -164,14 +164,14 @@ class JornadasAPI(APIView):
     def find_jornada(self, pk):
         return JornadaAyuda.objects.get(id=pk)
 
-    @admin_required
+    @admin_or_bodeguista_required
     def get(self, request, pk=None, format=None):
         queryset = self.find_jornada(pk)
         serializer = JornadaAyudaSerializer(
             queryset)
         return Response(serializer.data)
 
-    @admin_required
+    @admin_or_bodeguista_required
     def put(self, request, pk, format=None):
         jornada = self.find_jornada(pk)
         print(jornada)
@@ -188,8 +188,17 @@ class JornadasAPI(APIView):
         jornada.save()
         return Response(status=status.HTTP_200_OK)
 
-    @admin_required
+    @admin_or_bodeguista_required
     def delete(self, request, pk, format=None):
         jornada = self.find_jornada(pk)
         jornada.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class JornadasProductos(APIView):
+    def get(self, request, pk,format=None):
+        queryset = Producto.objects.filter(  (Q(codigo__icontains=pk) | Q(nombre__icontains=pk)) & Q(jornadaayuda__es_finalizado=True) | Q(jornadaayuda__isnull=True))
+        print(queryset)
+    
+        serializer = ProductoSerializer(queryset, many=True)
+        return Response(serializer.data)

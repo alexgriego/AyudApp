@@ -113,3 +113,12 @@ class DatosFamiliaAPI(APIView):
         q.save()
         queryset.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    @admin_or_encuenstador_required
+    def put(self, request, pk):
+        data = request.data
+        q = Beneficiario.objects.get(identificacion=pk)
+        q.es_censado = True
+        q.save()
+        
+        pass
