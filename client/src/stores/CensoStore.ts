@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
 import { errorMessage, successMessage } from '@/components/messages'
 import type { BeneficiarioTypes } from '@/types/BeneficiarioTypes'
-import { createFamilia } from '@/apis/familias.apis'
+import { anadirMiembros, createFamilia } from '@/apis/familias.apis'
 import SesionStore from './SesionStore'
 import BeneficiarioStore from './BeneficiariosStore'
 const CensoStore = defineStore('Censo', () => {
@@ -42,6 +42,14 @@ const CensoStore = defineStore('Censo', () => {
             })
     }
 
+    const añadirRelacionadosNuevos =async(item:any)=>{
+        await anadirMiembros(item)
+        .then((Response) => {
+            successMessage('Hecho', 'Beneficiarios añadidos con éxito')
+            url.push('/censos')
+        })
+    }
+
     return {
         lider,
         setearLider,
@@ -49,7 +57,8 @@ const CensoStore = defineStore('Censo', () => {
         relacionados,
         eliminarRelacionado,
         procesarFamilia,
-        procesarCenso
+        procesarCenso,
+        añadirRelacionadosNuevos
 
     }
 })

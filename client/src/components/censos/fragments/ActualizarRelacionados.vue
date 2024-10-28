@@ -122,6 +122,6 @@ const procesar = async () => {
         })
     }
     console.log(json)
-    await warningMessage('¿Está seguro?', 'Una vez procesado no podrá modificar los datos, verifique antes de procesar.', () => { censos.procesarCenso(json) })
+    await warningMessage('¿Está seguro?', 'Una vez procesado no podrá modificar los datos, verifique antes de procesar.', () => { censos.añadirRelacionadosNuevos(json) })
 }
 </script>

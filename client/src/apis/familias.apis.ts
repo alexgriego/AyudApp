@@ -12,6 +12,17 @@ export const createFamilia = async (familia: any) => {
     );
 };
 
+export const anadirMiembros = async (familia: any) => {
+    const sesion = SesionStore()
+    return await baseApi.put("/censos/familias/", familia,
+        {
+            headers: {
+                Authorization: `JWT ${sesion.PAT}`
+            }
+        }
+    );
+};
+
 export const getFamilias = async () => {
     const sesion = SesionStore()
     return await baseApi.get("/censos/familias/",

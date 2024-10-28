@@ -5,7 +5,8 @@ import {
     deleteProducto, getDinero, getDineros, createDinero, updateDinero, deleteDinero,
     createJornada, getJornada, getJornadas, deleteJornada,
     searchJornada,
-    finishJornada
+    finishJornada,
+    getProductosJornada
 } from '@/apis/inventario.apis'
 import { errorMessage, successMessage } from '@/components/messages'
 import type { ProductoTypes } from '@/types/InventarioTypes'
@@ -127,6 +128,12 @@ const InventarioStore = defineStore('inventario', () => {
             })
     }
 
+    const obtenerProductosJornadas = async (item:any): Promise<any> => {
+        const { data } = await getProductosJornada(item)
+        return data
+    }
+    
+
     return {
         obtenerProductos,
         obtenerProducto,
@@ -140,8 +147,10 @@ const InventarioStore = defineStore('inventario', () => {
         eliminarDinero,
         guardarJornada,
         obtenerJornadas,
-        buscarJornada, finalizarJornada, eliminarJornada
-
+        buscarJornada,
+        finalizarJornada,
+        eliminarJornada,
+        obtenerProductosJornadas
     }
 })
 

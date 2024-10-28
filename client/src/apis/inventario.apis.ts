@@ -171,3 +171,15 @@ export const finishJornada = async (id: any) => {
         }
     );
 }
+
+export const getProductosJornada=async(name:any)=>{
+    const store = SesionStore();
+    return await baseApi.get(`/inventario/jornadas/producto/${name}/`,
+        {
+            headers: {
+                "Authorization": `JWT ${store.PAT}`
+            }
+        }
+    );
+    
+}
