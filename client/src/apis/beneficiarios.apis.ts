@@ -45,3 +45,12 @@ export const deleteBeneficiario = async (id: number) => {
         }
     });
 }
+
+export const añadirNuevoBeneficiario = async (data: any) => {
+    const sesion = SesionStore();
+    return baseApi.post('personas/beneficiarios/', data, {
+        headers: {
+            Authorization: `JWT ${sesion.PAT}`
+        }
+    });
+}
