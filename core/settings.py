@@ -99,22 +99,13 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        # Env config
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'ricoNScVghjlzckaiqRtAfPSCPtxpsib',
-        'HOST': 'roundhouse.proxy.rlwy.net',
-        'PORT': '33037'
-
-
         # Local config
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
-
+DATABASES["default"] = dj_database_url.parse("postgresql://ayudapp_db_user:Q5OPvY2gsWoALnh7baLb30FOH08ivO92@dpg-cs1ihdo8fa8c73d0pegg-a.oregon-postgres.render.com/ayudapp_db")
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
