@@ -15,6 +15,9 @@ urlpatterns = [
     # apis de censos
     path('api/v1/censos/', include('apps.Familia.urls')),
 ]
-
+"""
 urlpatterns += [re_path(r'^.*',
                         TemplateView.as_view(template_name='index.html'))]
+
+"""
+

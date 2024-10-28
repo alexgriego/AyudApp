@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col">
                 <div class="form-group">
-                    <label for="NIT">NIT <i class="bi bi-123"></i></label>
+                    <label for="NIT">Identificacón <i class="bi bi-123"></i></label>
                     <input type="text" class="form-control form-control-border" id="NIT" name="NIT" @input="handleInput"
                         v-model="data.NIT" :required="!data.NIT">
                 </div>

@@ -8,6 +8,7 @@ class Producto(models.Model):
     descripcion = models.TextField(null=True, blank=True)
     cantidad = models.IntegerField(default=1)
     tipo = models.CharField(max_length=100, default='Alimento')
+    patrocinador = models.CharField(max_length=100, null=True, blank=True)
     es_perecedero = models.BooleanField(default=False)
     fecha_vencimiento = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

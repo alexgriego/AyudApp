@@ -59,6 +59,28 @@ class FamiliaAPI(APIView):
                 q.save()
         return Response(status=status.HTTP_201_CREATED)
 
+    @admin_or_encuenstador_required 
+    def put(self,request):
+        lider = request.data['lider']
+        relacionados = request.data['relacionados']
+        familia = Familia.objects.get(beneficiario__identificacion=lider)
+        familia.cantidad_personas += len(relacionados)
+        if len(relacionados) > 0:
+            for item in relacionados:
+                print("item",item)
+                iden = item['identificacion']
+                parent = item['parentezco']
+                q = BeneficiariosFamilia(
+                    familia=Familia.objects.get(
+                        beneficiario__identificacion=lider),
+                    beneficiario=Beneficiario.objects.get(identificacion=iden),
+                    parentesco=parent
+                )
+                s = Beneficiario.objects.get(identificacion=iden)
+                s.es_censado = True
+                s.save()
+                q.save()
+        return  Response(status=status.HTTP_200_OK)
 
 class FamiliaDetailAPI(APIView):
     @admin_or_encuenstador_required
@@ -113,3 +135,12 @@ class DatosFamiliaAPI(APIView):
         q.save()
         queryset.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    @admin_or_encuenstador_required
+    def put(self, request, pk):
+        data = request.data
+        q = Beneficiario.objects.get(identificacion=pk)
+        q.es_censado = True
+        q.save()
+        
+        pass
