@@ -289,8 +289,8 @@ const data = ref({} as BeneficiarioTypes);
 const store = BeneficiarioStore();
 
 const props = defineProps<{
-    data: BeneficiarioTypes | null
-}>()
+  data?: BeneficiarioTypes | null;
+}>();
 
 let identificacion = Number(url.currentRoute.value.params.identificacion);
 
