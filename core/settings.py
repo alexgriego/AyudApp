@@ -98,7 +98,7 @@ DATABASES = {
     }
 }
 
-DATABASES["default"] = dj_database_url.parse("postgresql://ayudapp_db_user:Q5OPvY2gsWoALnh7baLb30FOH08ivO92@dpg-cs1ihdo8fa8c73d0pegg-a.oregon-postgres.render.com/ayudapp_db")
+DATABASES["default"] = dj_database_url.parse("postgresql://ayudapp_db_en3j_user:aBp7yTuRXrR99zaQa68xxrIajLZDw3Ly@dpg-ct0vns1u0jms73cai57g-a/ayudapp_db_en3j")
 
 
 # Password validation
