@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-"""
+
 DATABASES = {
     'default': {
         # Local config
@@ -99,7 +99,7 @@ DATABASES = {
 }
 
 DATABASES["default"] = dj_database_url.parse("postgresql://ayudapp_db_user:Q5OPvY2gsWoALnh7baLb30FOH08ivO92@dpg-cs1ihdo8fa8c73d0pegg-a.oregon-postgres.render.com/ayudapp_db")
-"""
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
