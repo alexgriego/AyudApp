@@ -107,7 +107,6 @@ class DetalleBeneficiarioAPI(APIView):
         }
         return Response(data, status=status.HTTP_200_OK)
 
-
 class PatrocinadorSearch(APIView):
     def get_patrocinador(self, pk):
         return Patrocinador.objects.get(Q(NIT=pk) | Q(nombre=pk))
