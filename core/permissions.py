@@ -9,7 +9,9 @@ User = get_user_model()
 def admin_required(func):
     @wraps(func)
     def wrapper(self, request, *args, **kwargs):
-        if request.user.is_superuser:
+        usuario = request.user
+        user_groups = usuario.groups.all()
+        if user_groups.filter(name='Administrador').exists():
             return func(self, request, *args, **kwargs)
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)

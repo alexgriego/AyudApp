@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from apps.Familia.models import BeneficiariosFamilia
-from core.permissions import admin_or_encuenstador_required
+from core.permissions import admin_or_encuenstador_required,admin_or_encuenstador_or_bodeguista_required
 from .serializer import BeneficiarioSerializer, PatrocinadorSerializer
 from .models import Beneficiario, Patrocinador
 from django.db.models import Q
@@ -60,7 +60,7 @@ class PatrocinadoresAPI(APIView):
     def find_patrocinador(self, pk):
         return Patrocinador.objects.get(NIT=pk)
 
-    @admin_or_encuenstador_required
+    @admin_or_encuenstador_or_bodeguista_required
     def get(self, request, pk=None, format=None):
         queryset = self.get_patrocinador(
             pk) if pk else self.get_patrocinadores()
