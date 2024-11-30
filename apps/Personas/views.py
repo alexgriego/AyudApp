@@ -110,4 +110,3 @@ class DetalleBeneficiarioAPI(APIView):
 class PatrocinadorSearch(APIView):
     def get_patrocinador(self, pk):
         return Patrocinador.objects.get(Q(NIT=pk) | Q(nombre=pk))
-
