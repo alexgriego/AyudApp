@@ -93,7 +93,6 @@ class PatrocinadoresAPI(APIView):
         patrocinador.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-
 class DetalleBeneficiarioAPI(APIView):
     @admin_or_encuenstador_required
     def get(self, request, pk):
